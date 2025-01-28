@@ -1,0 +1,22 @@
+*,
+:after,
+:before {
+  box-sizing: border-box;
+  border: 0 solid;
+  margin: 0px;
+  padding: 0px;
+}
+
+html {
+  height: 100%;
+  background-color: var(--color-black, #000);
+}
+
+body {
+  height: 100%;
+  background-color: color-mix(
+    in srgb,
+    var(--color-white, #fff) 5%,
+    transparent
+  );
+}
