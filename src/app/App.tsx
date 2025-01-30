@@ -1,7 +1,12 @@
 import './styles/globals.scss';
 
-function App() {
-  return <></>;
-}
+import { StoreProvider } from './providers/StoreProvider';
+import { AppRouter } from './providers/AppRouter';
 
-export default App;
+export function App() {
+  return (
+    <StoreProvider>
+      <AppRouter />
+    </StoreProvider>
+  );
+}
