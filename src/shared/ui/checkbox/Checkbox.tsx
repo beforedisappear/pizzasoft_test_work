@@ -18,16 +18,14 @@ interface IProps extends CheckboxProps {
 export function Checkbox(props: IProps) {
   const { label, name, ...restProps } = props;
 
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext();
+  const { control } = useFormContext<{ [key: string]: boolean }>();
 
   return (
     <Field className={styles.checkbox_container}>
       <Controller
         name={name}
         control={control}
+        defaultValue={false}
         render={({ field }) => (
           <HeadlessCheckbox
             {...restProps}

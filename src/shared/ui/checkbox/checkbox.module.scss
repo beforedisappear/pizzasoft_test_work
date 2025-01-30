@@ -14,7 +14,8 @@
   &_container {
     display: flex;
     align-items: center;
-    gap: 0.5rem; /* gap-2 */
+    gap: 0.5rem;
+    padding: 1rem;
   }
 
   &[data-check='true'] {

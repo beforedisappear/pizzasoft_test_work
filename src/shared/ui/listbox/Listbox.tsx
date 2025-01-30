@@ -1,7 +1,15 @@
 import styles from './listbox.module.scss';
 import Arrow from '@/shared/assets/arrow.svg?svgr';
 import Check from '@/shared/assets/checkmark.svg?svgr';
-import cn from 'clsx';
+// import cn from 'clsx';
+
+import {
+  useFormContext,
+  get,
+  Controller,
+  type RegisterOptions,
+  type FieldValues,
+} from 'react-hook-form';
 
 import {
   Listbox as HeadlessListbox,
@@ -10,25 +18,25 @@ import {
   ListboxOptions as HeadlessListboxOptions,
   ListboxProps,
 } from '@headlessui/react';
-import { useFormContext, get, Controller } from 'react-hook-form';
-// import { useState } from 'react';
 
-type LBOption = { name: string; value: string };
+type LBOption = { name: string; value: string | number };
 
 interface IProps<T extends LBOption> extends ListboxProps {
   name: string;
   options: T[];
+  rules?: Omit<
+    RegisterOptions<FieldValues, string>,
+    'disabled' | 'valueAsNumber' | 'valueAsDate' | 'setValueAs'
+  >;
 }
 
 export function Listbox<T extends LBOption>(props: IProps<T>) {
-  const { name, options, ...restProps } = props;
+  const { name, options, rules, ...restProps } = props;
 
   const {
     control,
     formState: { errors },
   } = useFormContext();
-
-  // const [selected, setSelected] = useState(people[1]);
 
   return (
     <div className={styles.listbox_container}>
@@ -56,10 +64,7 @@ export function Listbox<T extends LBOption>(props: IProps<T>) {
                   className={styles.listbox_option}
                   data-select={option.value === field.value}
                 >
-                  <Check
-                    aria-hidden
-                    className={cn(styles.listbox_check_icon, 'group')}
-                  />
+                  <Check aria-hidden className={styles.listbox_check_icon} />
 
                   <div className={styles.option_text}>{option.name}</div>
                 </HeadlessListboxOption>
@@ -67,6 +72,7 @@ export function Listbox<T extends LBOption>(props: IProps<T>) {
             </HeadlessListboxOptions>
           </HeadlessListbox>
         )}
+        rules={rules}
       />
 
       {get(errors, name)}

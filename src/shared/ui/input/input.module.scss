@@ -1,12 +1,13 @@
 .container {
   width: 100%;
   max-width: 28rem;
-  padding: 1rem;
+  padding: 1rem 1rem 1.5rem 1rem;
 }
 
 .field {
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .label {
@@ -16,11 +17,11 @@
   color: white;
 }
 
-// .description {
-//   font-size: 0.875rem;
-//   line-height: 1.5rem;
-//   color: rgba(255, 255, 255, 0.5);
-// }
+.error {
+  position: absolute;
+  top: 100%;
+  color: red;
+}
 
 .input {
   margin-top: 0.75rem;
@@ -34,9 +35,9 @@
   line-height: 1.5rem;
   color: white;
   outline: none;
-}
 
-.input:focus {
-  outline: 2px solid rgba(255, 255, 255, 0.25);
-  outline-offset: -2px;
+  &:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.25);
+    outline-offset: -2px;
+  }
 }

@@ -1,6 +1,8 @@
 import styles from './input.module.scss';
 import cn from 'clsx';
 
+import { ErrorMessage } from '@hookform/error-message';
+
 import {
   Input as HeadlessInput,
   Field,
@@ -8,19 +10,25 @@ import {
   type InputProps,
 } from '@headlessui/react';
 
-import { useFormContext, get } from 'react-hook-form';
+import {
+  useFormContext,
+  type RegisterOptions,
+  type FieldValues,
+  FieldPath,
+} from 'react-hook-form';
 
 interface Props extends InputProps {
   name: string;
   label?: string;
+  rules?: RegisterOptions<FieldValues, FieldPath<FieldValues>>;
 }
 
 export function Input(props: Props) {
-  const { name, children, className, label, ...restProps } = props;
+  const { name, children, className, label, rules, ...restProps } = props;
   const {
     register,
     formState: { errors },
-  } = useFormContext();
+  } = useFormContext<{ [key: string]: string | number }>();
 
   const classNames = cn(styles.input, className);
 
@@ -31,11 +39,17 @@ export function Input(props: Props) {
 
         <HeadlessInput
           {...restProps}
-          {...register(name)}
+          {...register(name, { setValueAs: v => (v ? v : null), ...rules })}
           className={classNames}
         />
 
-        {get(errors, name)}
+        <ErrorMessage
+          errors={errors}
+          name={name}
+          render={({ message }) => (
+            <span className={styles.error}>{message}</span>
+          )}
+        />
       </Field>
     </div>
   );
