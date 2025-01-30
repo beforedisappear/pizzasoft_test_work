@@ -1,0 +1,41 @@
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.375rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+
+  &_container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* gap-2 */
+  }
+
+  &[data-check='true'] {
+    background-color: white;
+
+    .checkbox_icon {
+      display: block;
+      color: black;
+    }
+  }
+
+  &_icon {
+    display: none;
+    width: 1rem;
+    height: 1rem;
+    color: white;
+  }
+
+  &_label {
+    color: white;
+    user-select: none;
+    cursor: pointer;
+  }
+}

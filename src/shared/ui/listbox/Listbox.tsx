@@ -1,53 +1,75 @@
 import styles from './listbox.module.scss';
+import Arrow from '@/shared/assets/arrow.svg?svgr';
+import Check from '@/shared/assets/checkmark.svg?svgr';
+import cn from 'clsx';
 
 import {
   Listbox as HeadlessListbox,
   ListboxButton as HeadlessListboxButton,
   ListboxOption as HeadlessListboxOption,
   ListboxOptions as HeadlessListboxOptions,
+  ListboxProps,
 } from '@headlessui/react';
-// import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid';
-import cn from 'clsx';
-import { useState } from 'react';
+import { useFormContext, get, Controller } from 'react-hook-form';
+// import { useState } from 'react';
 
-const people = [
-  { id: 1, name: 'Tom Cook' },
-  { id: 2, name: 'Wade Cooper' },
-  { id: 3, name: 'Tanya Fox' },
-  { id: 4, name: 'Arlene Mccoy' },
-  { id: 5, name: 'Devon Webb' },
-];
+type LBOption = { name: string; value: string };
 
-export function Listbox() {
-  const [selected, setSelected] = useState(people[1]);
+interface IProps<T extends LBOption> extends ListboxProps {
+  name: string;
+  options: T[];
+}
+
+export function Listbox<T extends LBOption>(props: IProps<T>) {
+  const { name, options, ...restProps } = props;
+
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+
+  // const [selected, setSelected] = useState(people[1]);
 
   return (
-    <div className={styles.listboxContainer}>
-      <HeadlessListbox value={selected} onChange={setSelected}>
-        <HeadlessListboxButton className={styles.listboxButton}>
-          {selected.name}
-          {/* <ChevronDownIcon
-            className='group pointer-events-none absolute top-2.5 right-2.5 size-4 fill-white/60'
-            aria-hidden='true'
-          /> */}
-        </HeadlessListboxButton>
-        <HeadlessListboxOptions
-          anchor='bottom'
-          transition
-          className={styles.listboxOptions}
-        >
-          {people.map(person => (
-            <HeadlessListboxOption
-              key={person.name}
-              value={person}
-              className={styles.listboxOption}
+    <div className={styles.listbox_container}>
+      <Controller
+        name={name}
+        control={control}
+        defaultValue={options[0].value}
+        render={({ field }) => (
+          <HeadlessListbox {...restProps} {...field} as='div'>
+            <HeadlessListboxButton className={styles.listbox_button}>
+              {options.find(el => el.value === field.value)?.name}
+
+              <Arrow aria-hidden className={styles.listbox_chevron_icon} />
+            </HeadlessListboxButton>
+
+            <HeadlessListboxOptions
+              anchor='bottom'
+              transition
+              className={styles.listbox_options}
             >
-              {/* <CheckIcon className='invisible size-4 fill-white group-data-[selected]:visible' /> */}
-              <div className={styles.optionText}>{person.name}</div>
-            </HeadlessListboxOption>
-          ))}
-        </HeadlessListboxOptions>
-      </HeadlessListbox>
+              {options.map(option => (
+                <HeadlessListboxOption
+                  key={option.value}
+                  value={option.value}
+                  className={styles.listbox_option}
+                  data-select={option.value === field.value}
+                >
+                  <Check
+                    aria-hidden
+                    className={cn(styles.listbox_check_icon, 'group')}
+                  />
+
+                  <div className={styles.option_text}>{option.name}</div>
+                </HeadlessListboxOption>
+              ))}
+            </HeadlessListboxOptions>
+          </HeadlessListbox>
+        )}
+      />
+
+      {get(errors, name)}
     </div>
   );
 }

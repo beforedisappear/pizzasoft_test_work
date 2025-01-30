@@ -9,6 +9,8 @@
 
 html {
   height: 100%;
+  line-height: 1.5rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   background-color: var(--color-black, #000);
 }
 
@@ -19,4 +21,15 @@ body {
     var(--color-white, #fff) 5%,
     transparent
   );
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  line-height: inherit;
+  border: none;
+  outline: none;
+  background: none;
 }
