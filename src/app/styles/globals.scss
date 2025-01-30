@@ -7,23 +7,6 @@
   padding: 0px;
 }
 
-html {
-  height: 100%;
-  line-height: 1.5rem;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  background-color: var(--color-black, #000);
-}
-
-body {
-  height: 100%;
-  color: #fff;
-  background-color: color-mix(
-    in srgb,
-    var(--color-white, #fff) 5%,
-    transparent
-  );
-}
-
 button,
 input,
 textarea,
@@ -33,4 +16,35 @@ select {
   border: none;
   outline: none;
   background: none;
+}
+
+html {
+  height: 100%;
+  line-height: 1.5rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: var(--color-black, #000);
+}
+
+body {
+  min-height: 100%;
+  color: #fff;
+  background-color: color-mix(
+    in srgb,
+    var(--color-white, #fff) 5%,
+    transparent
+  );
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+main {
+  flex-grow: 1;
+  padding: 16px;
 }

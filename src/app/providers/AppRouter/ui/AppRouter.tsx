@@ -2,10 +2,17 @@ import { createBrowserRouter, RouterProvider } from 'react-router';
 
 import { routerConfig } from '../config/router.config';
 
-export function AppRouter() {
+interface Props {
+  layout?: React.ReactNode;
+  errorBoundary?: React.ReactNode;
+}
+
+export function AppRouter({ layout, errorBoundary }: Props) {
   const routes = Object.values(routerConfig);
 
-  const router = createBrowserRouter(routes);
+  const router = createBrowserRouter([
+    { element: layout, errorElement: errorBoundary, children: routes },
+  ]);
 
   return <RouterProvider router={router} />;
 }

@@ -1,0 +1,14 @@
+.sort_employees_btn {
+  &_type {
+    width: 130px;
+    justify-content: center;
+  }
+
+  &_dir {
+    &.rotated {
+      > svg {
+        transform: rotate(180deg) scaleX(-1);
+      }
+    }
+  }
+}

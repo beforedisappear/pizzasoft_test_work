@@ -19,7 +19,7 @@ import {
   ListboxProps,
 } from '@headlessui/react';
 
-type LBOption = { name: string; value: string | number };
+type LBOption = { name: string; value: string };
 
 interface IProps<T extends LBOption> extends ListboxProps {
   name: string;
@@ -31,7 +31,13 @@ interface IProps<T extends LBOption> extends ListboxProps {
 }
 
 export function Listbox<T extends LBOption>(props: IProps<T>) {
-  const { name, options, rules, ...restProps } = props;
+  const {
+    name,
+    options,
+    rules,
+    onChange: CustomOnChange,
+    ...restProps
+  } = props;
 
   const {
     control,
@@ -43,35 +49,50 @@ export function Listbox<T extends LBOption>(props: IProps<T>) {
       <Controller
         name={name}
         control={control}
-        defaultValue={options[0].value}
-        render={({ field }) => (
-          <HeadlessListbox {...restProps} {...field} as='div'>
-            <HeadlessListboxButton className={styles.listbox_button}>
-              {options.find(el => el.value === field.value)?.name}
+        defaultValue={options[0]?.value}
+        render={({ field: { onChange, ...field } }) => {
+          const handleChange = (e: T['value']) => {
+            onChange(e);
+            if (CustomOnChange) CustomOnChange(e);
+          };
 
-              <Arrow aria-hidden className={styles.listbox_chevron_icon} />
-            </HeadlessListboxButton>
+          const selectedValue = options.find(
+            el => el.value === field.value,
+          )?.name;
 
-            <HeadlessListboxOptions
-              anchor='bottom'
-              transition
-              className={styles.listbox_options}
+          return (
+            <HeadlessListbox
+              {...restProps}
+              {...field}
+              onChange={handleChange}
+              as='div'
             >
-              {options.map(option => (
-                <HeadlessListboxOption
-                  key={option.value}
-                  value={option.value}
-                  className={styles.listbox_option}
-                  data-select={option.value === field.value}
-                >
-                  <Check aria-hidden className={styles.listbox_check_icon} />
+              <HeadlessListboxButton className={styles.listbox_button}>
+                {selectedValue}
+                <Arrow aria-hidden className={styles.listbox_chevron_icon} />
+              </HeadlessListboxButton>
 
-                  <div className={styles.option_text}>{option.name}</div>
-                </HeadlessListboxOption>
-              ))}
-            </HeadlessListboxOptions>
-          </HeadlessListbox>
-        )}
+              <HeadlessListboxOptions
+                anchor='bottom'
+                transition
+                className={styles.listbox_options}
+              >
+                {options.map(option => (
+                  <HeadlessListboxOption
+                    key={option.value}
+                    value={option.value}
+                    className={styles.listbox_option}
+                    data-select={option.value === field.value}
+                  >
+                    <Check aria-hidden className={styles.listbox_check_icon} />
+
+                    <div className={styles.option_text}>{option.name}</div>
+                  </HeadlessListboxOption>
+                ))}
+              </HeadlessListboxOptions>
+            </HeadlessListbox>
+          );
+        }}
         rules={rules}
       />
 

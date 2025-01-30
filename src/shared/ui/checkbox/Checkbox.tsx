@@ -16,7 +16,7 @@ interface IProps extends CheckboxProps {
 }
 
 export function Checkbox(props: IProps) {
-  const { label, name, ...restProps } = props;
+  const { label, name, onChange: onCustomChangea, ...restProps } = props;
 
   const { control } = useFormContext<{ [key: string]: boolean }>();
 
@@ -26,16 +26,27 @@ export function Checkbox(props: IProps) {
         name={name}
         control={control}
         defaultValue={false}
-        render={({ field }) => (
-          <HeadlessCheckbox
-            {...restProps}
-            {...field}
-            data-check={field.value === true}
-            className={styles.checkbox}
-          >
-            <Checkmark className={styles.checkbox_icon} />
-          </HeadlessCheckbox>
-        )}
+        render={({ field: { onChange, ...field } }) => {
+          const handleChange = (v: boolean) => {
+            onChange(v);
+
+            if (onCustomChangea) {
+              onCustomChangea(v);
+            }
+          };
+
+          return (
+            <HeadlessCheckbox
+              {...restProps}
+              {...field}
+              onChange={handleChange}
+              data-check={field.value === true}
+              className={styles.checkbox}
+            >
+              <Checkmark className={styles.checkbox_icon} />
+            </HeadlessCheckbox>
+          );
+        }}
       />
 
       {label && <Label className={styles.checkbox_label}>{label}</Label>}

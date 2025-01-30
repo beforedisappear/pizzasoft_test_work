@@ -1,0 +1,9 @@
+.filter {
+  &_form {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+}

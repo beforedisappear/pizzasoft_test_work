@@ -1,0 +1,36 @@
+.employee_list {
+  &_item {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    min-height: 2rem;
+    height: auto;
+    color: #fff;
+
+    &_link {
+      display: flex;
+      width: 100%;
+      text-decoration: none;
+    }
+
+    &_cell {
+      flex-grow: 1;
+      flex-basis: 33%;
+      min-width: 100px;
+      color: #7d7474;
+      text-align: center;
+
+      &.title {
+        color: #fff;
+      }
+
+      &.left {
+        text-align: left;
+      }
+
+      &.right {
+        text-align: right;
+      }
+    }
+  }
+}
