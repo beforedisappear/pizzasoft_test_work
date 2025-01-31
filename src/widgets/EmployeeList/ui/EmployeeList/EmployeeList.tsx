@@ -2,7 +2,8 @@ import styles from './employeeList.module.scss';
 
 import {
   selectFilteredAndSortedEmployees,
-  getEmployees,
+  getEmployeesThunk,
+  mapEmployeeRole,
 } from '@/entities/Employee';
 
 import { Block } from '@/shared/ui';
@@ -12,7 +13,7 @@ import { EmployeeListSkeleton } from '../EmployeeListSkeleton/EmployeeListSkelet
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/shared/store';
 
-import { getEmployeeRoute } from '@/shared/lib/react-router';
+import { getEmployeeByIdRoute } from '@/shared/lib/react-router';
 
 interface Props {}
 
@@ -23,7 +24,7 @@ export function EmployeeList({}: Props) {
   );
 
   useEffect(() => {
-    dispath(getEmployees());
+    dispath(getEmployeesThunk());
   }, []);
 
   if (status === 'loading' || status === 'idle')
@@ -31,8 +32,8 @@ export function EmployeeList({}: Props) {
   else if (status === 'error') return <div>{error?.message}</div>;
 
   return (
-    <div className={styles.employee_list_container}>
-      <Block as='ul' className={styles.employee_list}>
+    <div className={styles.employee_list}>
+      <Block as='ul' fixedWidth>
         <EmployeeListItem
           isTitle
           data={['Имя сотрудника', 'Должность', 'Номер телефона']}
@@ -42,8 +43,8 @@ export function EmployeeList({}: Props) {
           return (
             <EmployeeListItem
               key={el.id}
-              data={[el.name, el.role, el.phone]}
-              url={getEmployeeRoute(el.id)}
+              data={[el.name, mapEmployeeRole[el.role], el.phone]}
+              url={getEmployeeByIdRoute(el.id)}
             />
           );
         })}

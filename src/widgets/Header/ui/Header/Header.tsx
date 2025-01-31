@@ -1,15 +1,32 @@
 import styles from './header.module.scss';
+import cn from 'clsx';
 
-import { Link } from 'react-router';
+import { NavLink } from 'react-router';
+
+import { getCreateEmployeeRoute } from '@/shared/lib/react-router';
 
 interface Props {}
 
 export function Header({}: Props) {
   return (
     <header className={styles.header}>
-      <Link className={styles.header_item} to={'/'}>
+      <NavLink
+        to={'/'}
+        className={({ isActive }) =>
+          cn(styles.header_item, { [styles.active]: isActive })
+        }
+      >
         <span>Главная</span>
-      </Link>
+      </NavLink>
+
+      <NavLink
+        to={getCreateEmployeeRoute()}
+        className={({ isActive }) =>
+          cn(styles.header_item, { [styles.active]: isActive })
+        }
+      >
+        <span>Создать сотрудника</span>
+      </NavLink>
     </header>
   );
 }

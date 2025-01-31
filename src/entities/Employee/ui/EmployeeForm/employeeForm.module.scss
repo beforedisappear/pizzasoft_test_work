@@ -1,0 +1,13 @@
+.employee_form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  row-gap: 1.25rem;
+
+  &_btn {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 200px;
+    justify-content: center;
+  }
+}

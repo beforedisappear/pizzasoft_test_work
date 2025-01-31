@@ -16,7 +16,13 @@ interface IProps extends CheckboxProps {
 }
 
 export function Checkbox(props: IProps) {
-  const { label, name, onChange: onCustomChangea, ...restProps } = props;
+  const {
+    label,
+    name,
+    onChange: onCustomChangea,
+    defaultChecked,
+    ...restProps
+  } = props;
 
   const { control } = useFormContext<{ [key: string]: boolean }>();
 
@@ -25,7 +31,7 @@ export function Checkbox(props: IProps) {
       <Controller
         name={name}
         control={control}
-        defaultValue={false}
+        defaultValue={defaultChecked ?? false}
         render={({ field: { onChange, ...field } }) => {
           const handleChange = (v: boolean) => {
             onChange(v);

@@ -4,6 +4,12 @@
     align-items: center;
     width: fit-content;
     flex-wrap: wrap;
-    gap: 2rem;
+    row-gap: 1.5rem;
+    column-gap: 2rem;
+  }
+
+  &_select {
+    width: 11rem;
+    max-width: 11rem;
   }
 }

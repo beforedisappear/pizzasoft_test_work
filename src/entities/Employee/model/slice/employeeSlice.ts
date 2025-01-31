@@ -2,20 +2,25 @@ import {
   createSlice,
   createEntityAdapter,
   type PayloadAction,
-  SerializedError,
+  type SerializedError,
 } from '@reduxjs/toolkit';
 
-import { getEmployees } from '../thunks/getEmployees';
+import { getEmployeesThunk } from '../thunks/getEmployeesThunk';
+import { getEmployeeByIdThunk } from '../thunks/getEmpoyeeByIdThunk';
 
 import type {
   Employee,
   EmployeeRole,
   EmployeeSortDir,
-} from '../../types/employee';
+} from '../../types/employee.types';
+
+type ThunkStatus = 'idle' | 'loading' | 'succeeded' | 'error';
 
 interface InitState {
-  status: 'idle' | 'loading' | 'succeeded' | 'error';
-  error: SerializedError | null;
+  byIdStatus: ThunkStatus;
+  allStatus: ThunkStatus;
+  byIdError: SerializedError | null;
+  allError: SerializedError | null;
   sortBy: keyof Employee;
   sortDirection: EmployeeSortDir;
   filterRole: EmployeeRole | 'all';
@@ -27,8 +32,10 @@ export const employeeAdapter = createEntityAdapter<Employee>({
 });
 
 const initialState = employeeAdapter.getInitialState<InitState>({
-  status: 'idle',
-  error: null,
+  byIdStatus: 'idle',
+  allStatus: 'idle',
+  byIdError: null,
+  allError: null,
   sortBy: 'name',
   sortDirection: 'asc',
   filterRole: 'all',
@@ -39,12 +46,21 @@ const employeeSlice = createSlice({
   name: 'employee',
   initialState,
   reducers: {
-    addEmployee(state, { payload }: PayloadAction<Employee>) {
-      employeeAdapter.addOne(state, payload);
+    addEmployee: {
+      reducer: (state, { payload }: PayloadAction<Employee>) => {
+        employeeAdapter.addOne(state, payload);
+      },
+      prepare: (v: Omit<Employee, 'id'>) => ({
+        payload: { ...v, id: Date.now() },
+      }),
     },
 
     updateEmployee(state, { payload }: PayloadAction<Employee>) {
       employeeAdapter.upsertOne(state, payload);
+    },
+
+    deleteEmployee(state, { payload }: PayloadAction<number>) {
+      employeeAdapter.removeOne(state, payload);
     },
 
     setSortBy: (state, { payload }: PayloadAction<keyof Employee>) => {
@@ -65,19 +81,44 @@ const employeeSlice = createSlice({
     setFilterArchive: (state, { payload }: PayloadAction<boolean>) => {
       state.filterArchive = payload;
     },
+
+    clearFilters: state => {
+      state.filterRole = 'all';
+      state.filterArchive = false;
+    },
+
+    clearSorts: state => {
+      (state.sortBy = 'name'), (state.sortDirection = 'asc');
+    },
   },
   extraReducers: builder => {
     builder
-      .addCase(getEmployees.pending, state => {
-        state.status = 'loading';
+      //getEmployees
+      .addCase(getEmployeesThunk.pending, state => {
+        state.byIdStatus = 'loading';
       })
-      .addCase(getEmployees.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        employeeAdapter.setAll(state, action.payload);
+      .addCase(getEmployeesThunk.fulfilled, (state, { payload }) => {
+        state.allStatus = 'succeeded';
+        //TODO: add comment
+        //should use setAll to rewrite data
+        //but we use addMany to support routing and imit
+        employeeAdapter.addMany(state, payload);
       })
-      .addCase(getEmployees.rejected, (state, action) => {
-        state.status = 'error';
-        state.error = action.error || 'Failed to load employees';
+      .addCase(getEmployeesThunk.rejected, (state, { error }) => {
+        state.allStatus = 'error';
+        state.allError = error || 'Failed to load employees';
+      })
+      //getEmployeeById
+      .addCase(getEmployeeByIdThunk.pending, state => {
+        state.byIdStatus = 'loading';
+      })
+      .addCase(getEmployeeByIdThunk.fulfilled, (state, { payload }) => {
+        state.byIdStatus = 'succeeded';
+        employeeAdapter.addOne(state, payload);
+      })
+      .addCase(getEmployeeByIdThunk.rejected, (state, { error }) => {
+        state.byIdStatus = 'error';
+        state.byIdError = error || 'Failed to load employee';
       });
   },
 });
@@ -89,8 +130,11 @@ export { reducer as employeeReducer };
 export const {
   addEmployee,
   updateEmployee,
+  deleteEmployee,
   setSortBy,
   setSortDirection,
   setFilterArchive,
   setFilterRole,
+  clearFilters,
+  clearSorts,
 } = actions;

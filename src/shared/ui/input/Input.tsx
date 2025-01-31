@@ -2,7 +2,6 @@ import styles from './input.module.scss';
 import cn from 'clsx';
 
 import { ErrorMessage } from '@hookform/error-message';
-
 import {
   Input as HeadlessInput,
   Field,
@@ -10,17 +9,15 @@ import {
   type InputProps,
 } from '@headlessui/react';
 
-import {
-  useFormContext,
-  type RegisterOptions,
-  type FieldValues,
-  FieldPath,
-} from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
+
+import type { UnControlledInputRules } from '@/shared/lib/react-hook-form';
 
 interface Props extends InputProps {
   name: string;
+  className?: string;
   label?: string;
-  rules?: RegisterOptions<FieldValues, FieldPath<FieldValues>>;
+  rules?: UnControlledInputRules;
 }
 
 export function Input(props: Props) {
@@ -33,7 +30,7 @@ export function Input(props: Props) {
   const classNames = cn(styles.input, className);
 
   return (
-    <div className={styles.container}>
+    <div className={cn(styles.container, className)}>
       <Field className={styles.field}>
         {label && <Label className={styles.label}>{label}</Label>}
 

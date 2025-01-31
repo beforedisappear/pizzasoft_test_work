@@ -1,15 +1,40 @@
-export type { Employee, EmployeeRole, EmployeeSortDir } from './types/employee';
+//types
+export type {
+  Employee,
+  EmployeeRole,
+  EmployeeSortDir,
+  FormEmployee,
+} from './types/employee.types';
 
+//components
+export { EmployeeForm } from './ui/EmployeeForm/EmployeeForm';
+
+//constants
+export {
+  defaultFilterEmployeesOptions,
+  mapEmployeeRole,
+} from './constants/employee.constants';
+
+//store
 export {
   employeeReducer,
   setSortBy,
   setSortDirection,
   setFilterRole,
   setFilterArchive,
+  addEmployee,
+  updateEmployee,
+  deleteEmployee,
+  clearFilters,
+  clearSorts,
 } from './model/slice/employeeSlice';
 
-export { getEmployees } from './model/thunks/getEmployees';
+//thunks
+export { getEmployeesThunk } from './model/thunks/getEmployeesThunk';
+export { getEmployeeByIdThunk } from './model/thunks/getEmpoyeeByIdThunk';
 
+//selectors
 export { selectFilteredAndSortedEmployees } from './model/selectors/selectFilteredAndSortedEmployees/selectFilteredAndSortedEmployees';
+export { selectEmployeeById } from './model/selectors/selectEmployeeById/selectEmployeeById';
 export { selectSortBy } from './model/selectors/selectSortBy/selectSortBy';
 export { selectSortDirection } from './model/selectors/selectSortDirection/selectSortDirection';

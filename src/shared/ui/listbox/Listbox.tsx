@@ -1,33 +1,27 @@
 import styles from './listbox.module.scss';
 import Arrow from '@/shared/assets/arrow.svg?svgr';
 import Check from '@/shared/assets/checkmark.svg?svgr';
-// import cn from 'clsx';
+import cn from 'clsx';
 
-import {
-  useFormContext,
-  get,
-  Controller,
-  type RegisterOptions,
-  type FieldValues,
-} from 'react-hook-form';
+import { useFormContext, get, Controller } from 'react-hook-form';
 
 import {
   Listbox as HeadlessListbox,
   ListboxButton as HeadlessListboxButton,
   ListboxOption as HeadlessListboxOption,
   ListboxOptions as HeadlessListboxOptions,
-  ListboxProps,
+  type ListboxProps,
 } from '@headlessui/react';
+
+import type { ControlledInputRules } from '@/shared/lib/react-hook-form';
 
 type LBOption = { name: string; value: string };
 
 interface IProps<T extends LBOption> extends ListboxProps {
   name: string;
   options: T[];
-  rules?: Omit<
-    RegisterOptions<FieldValues, string>,
-    'disabled' | 'valueAsNumber' | 'valueAsDate' | 'setValueAs'
-  >;
+  className?: string;
+  rules?: ControlledInputRules;
 }
 
 export function Listbox<T extends LBOption>(props: IProps<T>) {
@@ -35,6 +29,7 @@ export function Listbox<T extends LBOption>(props: IProps<T>) {
     name,
     options,
     rules,
+    className,
     onChange: CustomOnChange,
     ...restProps
   } = props;
@@ -45,7 +40,7 @@ export function Listbox<T extends LBOption>(props: IProps<T>) {
   } = useFormContext();
 
   return (
-    <div className={styles.listbox_container}>
+    <div className={cn(styles.listbox_container, className)}>
       <Controller
         name={name}
         control={control}

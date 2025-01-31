@@ -10,3 +10,5 @@ export interface Employee {
   phone: string;
   birthday: string;
 }
+
+export type FormEmployee = Omit<Employee, 'id'>;

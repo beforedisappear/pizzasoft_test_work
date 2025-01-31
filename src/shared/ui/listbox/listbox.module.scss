@@ -1,7 +1,8 @@
 .listbox {
   &_container {
     position: relative;
-    width: 13rem;
+    width: 100%;
+    max-width: 28rem;
   }
 
   &_button {

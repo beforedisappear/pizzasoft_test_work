@@ -4,3 +4,4 @@ export { Checkbox } from './checkbox/Checkbox';
 export { Input } from './input/Input';
 export { Block } from './block/Block';
 export { Skeleton } from './skeleton/Skeleton';
+export { MaskInput } from './maskInput/MaskInput';

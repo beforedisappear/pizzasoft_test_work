@@ -1,33 +1,43 @@
 import styles from './filterEmployees.module.scss';
 
 import { Listbox, Checkbox } from '@/shared/ui';
+
 import { FormProvider, useForm } from 'react-hook-form';
 import { useAppDispatch } from '@/shared/store';
-
-import { filterEmployeesOptions } from './FilterEmployees.data';
+import { useEffect } from 'react';
 
 import {
+  clearFilters,
   setFilterArchive,
   setFilterRole,
   type EmployeeRole,
 } from '@/entities/Employee';
 
+import { filterEmployeesOptions } from './FilterEmployees.data';
+
 interface Props {}
 
 export function FilterEmployees({}: Props) {
-  const dispath = useAppDispatch();
+  const dispatch = useAppDispatch();
   const form = useForm<{ employeeFilterRole: EmployeeRole }>();
+
+  //to reset filter state after component unmounting
+  useEffect(() => {
+    return () => {
+      dispatch(clearFilters());
+    };
+  }, []);
 
   const onSubmit = form.handleSubmit((_, e) => {
     e?.preventDefault();
   });
 
   const handleChangeRole = (value: EmployeeRole | 'all') => {
-    dispath(setFilterRole(value));
+    dispatch(setFilterRole(value));
   };
 
   const handleChangeArchive = (value: boolean) => {
-    dispath(setFilterArchive(value));
+    dispatch(setFilterArchive(value));
   };
 
   return (
@@ -37,6 +47,7 @@ export function FilterEmployees({}: Props) {
           name='employeeFilterRole'
           options={filterEmployeesOptions}
           onChange={handleChangeRole}
+          className={styles.filter_select}
         />
 
         <Checkbox
