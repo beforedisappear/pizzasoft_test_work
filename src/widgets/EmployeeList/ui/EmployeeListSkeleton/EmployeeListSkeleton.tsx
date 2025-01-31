@@ -1,14 +1,16 @@
 import styles from '../EmployeeList/employeeList.module.scss';
 // import cn from 'cslx';
 
-import { Skeleton } from '@/shared/ui';
+import { Block, Skeleton } from '@/shared/ui';
 
 interface Props {}
 
 export function EmployeeListSkeleton({}: Props) {
   return (
-    <div className={styles.employee_list_container}>
-      <Skeleton className={styles.employee_list} />
+    <div className={styles.employee_list}>
+      <Block>
+        <Skeleton style={{ flexGrow: 1, width: '100%', height: '100%' }} />
+      </Block>
     </div>
   );
 }
