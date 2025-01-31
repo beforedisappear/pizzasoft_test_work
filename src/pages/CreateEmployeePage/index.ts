@@ -1,1 +1,1 @@
-export { CreateEmployeePage } from './ui/CreateEmployeePage/CreateEmployeePage';
+export { CreateEmployeePage } from './ui/CreateEmployeePage';

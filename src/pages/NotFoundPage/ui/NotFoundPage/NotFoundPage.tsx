@@ -1,5 +1,11 @@
+import { ErrorMessage } from '@/widgets/ErrorMessage';
+
 interface Props {}
 
 export function NotFoundPage({}: Props) {
-  return <div>NotFoundPage</div>;
+  return (
+    <>
+      <ErrorMessage message='Страница не найдена' />
+    </>
+  );
 }

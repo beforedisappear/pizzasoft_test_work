@@ -1,17 +1,18 @@
 import './styles/globals.scss';
 
 import { StoreProvider } from './providers/StoreProvider';
-import { ToastProvider } from './providers/ToastProvider';
+import { NotificationProvider } from './providers/NotificationProvider';
 import { AppRouter } from './providers/AppRouter';
 
 import { RootLayout } from './layouts/RootLayout/RootLayout';
+import { ErrorMessage } from '@/widgets/ErrorMessage';
 
 export function App() {
   return (
     <StoreProvider>
-      <ToastProvider>
-        <AppRouter layout={<RootLayout />} />
-      </ToastProvider>
+      <NotificationProvider>
+        <AppRouter layout={<RootLayout />} errorBoundary={<ErrorMessage />} />
+      </NotificationProvider>
     </StoreProvider>
   );
 }

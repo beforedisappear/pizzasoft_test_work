@@ -6,7 +6,7 @@ export const getEmployees = async () => {
   const response = await fetch('../../../../employees.json');
 
   if (!response.ok) {
-    throw new Error('Failed to fetch employees');
+    throw new Error('Ошибка загрузки сотрудников');
   }
 
   const data: Employee[] = await response.json();

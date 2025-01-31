@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/shared/store';
 
 import { getEmployeeByIdRoute } from '@/shared/lib/react-router';
+import { EmployeeListError } from '../EmployeeListError/EmployeeListError';
 
 interface Props {}
 
@@ -29,7 +30,7 @@ export function EmployeeList({}: Props) {
 
   if (status === 'loading' || status === 'idle')
     return <EmployeeListSkeleton />;
-  else if (status === 'error') return <div>{error?.message}</div>;
+  else if (status === 'error') return <EmployeeListError error={error} />;
 
   return (
     <div className={styles.employee_list}>

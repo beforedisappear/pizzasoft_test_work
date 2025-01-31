@@ -11,7 +11,12 @@ export const getEmployeesThunk = createAsyncThunk<Employee[]>(
       return getEmployees();
     } catch (e) {
       console.error(e);
-      return rejectWithValue(e);
+      console.log(123);
+      let message = 'Непредвиденная ошибка';
+
+      if (e instanceof Error) message = e.message;
+
+      return rejectWithValue({ message });
     }
   },
 );

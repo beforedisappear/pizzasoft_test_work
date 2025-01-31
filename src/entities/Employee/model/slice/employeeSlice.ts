@@ -104,9 +104,9 @@ const employeeSlice = createSlice({
         //but we use addMany to support routing and imit
         employeeAdapter.addMany(state, payload);
       })
-      .addCase(getEmployeesThunk.rejected, (state, { error }) => {
+      .addCase(getEmployeesThunk.rejected, (state, { payload }) => {
         state.allStatus = 'error';
-        state.allError = error || 'Failed to load employees';
+        state.allError = payload || 'Ошибка получения сотрудников';
       })
       //getEmployeeById
       .addCase(getEmployeeByIdThunk.pending, state => {
@@ -116,9 +116,9 @@ const employeeSlice = createSlice({
         state.byIdStatus = 'succeeded';
         employeeAdapter.addOne(state, payload);
       })
-      .addCase(getEmployeeByIdThunk.rejected, (state, { error }) => {
+      .addCase(getEmployeeByIdThunk.rejected, (state, { payload }) => {
         state.byIdStatus = 'error';
-        state.byIdError = error || 'Failed to load employee';
+        state.byIdError = payload || 'Ошибка получения сотрудника';
       });
   },
 });

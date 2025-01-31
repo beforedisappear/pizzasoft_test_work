@@ -1,4 +1,5 @@
 import { Header } from '@/widgets/Header';
+import { Suspense } from 'react';
 import { Outlet } from 'react-router';
 
 export function RootLayout() {
@@ -6,7 +7,9 @@ export function RootLayout() {
     <>
       <Header />
       <main>
-        <Outlet />
+        <Suspense fallback={'Loading...'}>
+          <Outlet />
+        </Suspense>
       </main>
       {/* footer */}
     </>

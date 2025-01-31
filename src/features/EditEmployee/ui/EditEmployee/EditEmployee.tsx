@@ -35,7 +35,8 @@ export function EditEmployee({ id }: Props) {
 
   if (status === 'idle' || status === 'loading') {
     return <EditEmployeeSkeleton />;
-  } else if (status === 'error') return <div>{error?.message}</div>;
+  } else if (status === 'error')
+    return <span style={{ color: 'red' }}>{`Ошибка: ${error?.message}`}</span>;
 
   const onSubmit = form.handleSubmit(data => {
     dispatch(updateEmployee({ id: employeeId, ...data }));

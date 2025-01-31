@@ -16,14 +16,18 @@ export const getEmployeeByIdThunk = createAsyncThunk<Employee, number>(
 
       // to avoid errors when working with new users (not in json)
       if (!employeeInJson && !employeeIdInState)
-        throw new Error('Employee not found');
+        throw new Error('Сотрудник не найден');
 
       return (
         employeeInJson || state.employee.entities[employeeIdInState as number]
       );
     } catch (e) {
       console.error(e);
-      return rejectWithValue(e);
+      let message = 'Непредвиденная ошибка';
+
+      if (e instanceof Error) message = e.message;
+
+      return rejectWithValue({ message });
     }
   },
 );
