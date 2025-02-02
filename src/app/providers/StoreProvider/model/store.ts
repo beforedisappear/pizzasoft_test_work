@@ -11,7 +11,7 @@ export function createReduxStore(
     middleware: getDefaultMiddleware =>
       //middleware connection for the work of RTK query
       getDefaultMiddleware({}).concat(storeMiddlewares),
-    devTools: import.meta.env.DEV,
+    // devTools: import.meta.env.DEV,
     preloadedState: initialState,
   });
 }

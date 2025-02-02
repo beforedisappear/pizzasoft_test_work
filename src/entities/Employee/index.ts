@@ -27,11 +27,11 @@ export {
   deleteEmployee,
   clearFilters,
   clearSorts,
-} from './model/slice/employeeSlice';
+} from './model/slices/employeeSlice/employeeSlice';
 
 //thunks
-export { getEmployeesThunk } from './model/thunks/getEmployeesThunk';
-export { getEmployeeByIdThunk } from './model/thunks/getEmpoyeeByIdThunk';
+export { getEmployeesThunk } from './model/thunks/getEmployeesThunk/getEmployeesThunk';
+export { getEmployeeByIdThunk } from './model/thunks/getEmpoyeeByIdThunk/getEmpoyeeByIdThunk';
 
 //selectors
 export { selectFilteredAndSortedEmployees } from './model/selectors/selectFilteredAndSortedEmployees/selectFilteredAndSortedEmployees';

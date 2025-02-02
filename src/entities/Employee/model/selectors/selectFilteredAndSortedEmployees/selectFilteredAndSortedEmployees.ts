@@ -3,7 +3,13 @@ import _ from 'lodash';
 
 import { selectAllEmployees } from '../selectAllEmployees/selectAllEmployees';
 import { selectEmployeeState } from '../selectEmployeeState/selectEmployeeState';
-import { convertDateToISO } from '@/shared/lib/date';
+// import { convertDateToISO } from '@/shared/lib/date';
+
+function convertDateToISO(dateStr: string): string {
+  const [day, month, year] = dateStr.split('.').map(Number);
+  const date = new Date(year, month - 1, day);
+  return date.toISOString().split('T')[0];
+}
 
 import type { Employee } from '../../../types/employee.types';
 

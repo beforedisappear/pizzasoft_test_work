@@ -1,1 +1,1 @@
-export * from './utils';
+export { convertDateToISO } from './utils';

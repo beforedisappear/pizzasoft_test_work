@@ -1,17 +1,22 @@
+import * as path from 'path';
+
 import type { Config } from 'jest';
 
 const config: Config = {
-  preset: 'ts-jest',
   testEnvironment: 'jsdom',
-  rootDir: '../../',
+  rootDir: '../..',
   passWithNoTests: true,
   clearMocks: true,
   coverageProvider: 'v8',
   coveragePathIgnorePatterns: ['\\\\node_modules\\\\'],
   moduleDirectories: ['node_modules'],
-  transform: {
-    '^.+.tsx?$': ['ts-jest', {}],
+  modulePaths: ['<rootDir>src'],
+  moduleNameMapper: {
+    '\\.s?css$': 'identity-obj-proxy',
+    '\\.svg\\?svgr$': path.resolve(__dirname, 'MockSvg.tsx'),
+    '^@/(.*)$': '<rootDir>/src/$1',
   },
+  setupFiles: ['<rootDir>/config/jest/jest.setup.ts'],
   moduleFileExtensions: [
     'js',
     'mjs',

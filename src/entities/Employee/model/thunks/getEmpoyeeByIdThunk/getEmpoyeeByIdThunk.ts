@@ -1,14 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { getEmployeeById } from '../../api/getEmployeeById';
+import { getEmployeeById } from '../../../api/getEmployeeById.api.ts';
 
-import type { Employee } from '../../types/employee.types';
+import type { Employee } from '../../../types/employee.types.ts';
 
 export const getEmployeeByIdThunk = createAsyncThunk<Employee, number>(
   'employees/getEmployeeById',
-  async (id, { rejectWithValue, getState }) => {
+  async (id, { rejectWithValue, getState, signal }) => {
     try {
-      const data = await getEmployeeById();
+      const data = await getEmployeeById({ signal });
       const state = getState() as RootState;
 
       const employeeInJson = data.find(el => el.id === id);

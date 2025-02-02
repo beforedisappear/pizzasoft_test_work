@@ -5,14 +5,14 @@ import {
   type SerializedError,
 } from '@reduxjs/toolkit';
 
-import { getEmployeesThunk } from '../thunks/getEmployeesThunk';
-import { getEmployeeByIdThunk } from '../thunks/getEmpoyeeByIdThunk';
+import { getEmployeesThunk } from '../../thunks/getEmployeesThunk/getEmployeesThunk';
+import { getEmployeeByIdThunk } from '../../thunks/getEmpoyeeByIdThunk/getEmpoyeeByIdThunk';
 
 import type {
   Employee,
   EmployeeRole,
   EmployeeSortDir,
-} from '../../types/employee.types';
+} from '../../../types/employee.types';
 
 type ThunkStatus = 'idle' | 'loading' | 'succeeded' | 'error';
 

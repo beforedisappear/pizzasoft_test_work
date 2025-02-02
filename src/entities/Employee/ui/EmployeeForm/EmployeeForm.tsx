@@ -4,7 +4,7 @@ import { Input, Listbox, Checkbox, Button, MaskInput } from '@/shared/ui';
 
 import { defaultFilterEmployeesOptions } from '../../constants/employee.constants';
 import { dateMask, phoneNumberMask } from '@/shared/lib/react-mask';
-import { employeeSchema } from '../../model/schemes/employeeSchema';
+import { employeeSchema } from '../../model/schemes/employee.schema';
 
 interface IProps {
   onSubmit: () => void;
