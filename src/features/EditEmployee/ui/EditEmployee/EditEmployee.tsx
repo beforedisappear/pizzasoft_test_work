@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/shared/store';
 import {
   updateEmployee,
   getEmployeeByIdThunk,
-  selectEmployeeById,
+  selectEmployeeByIdState,
 } from '@/entities/Employee';
 
 import { toast } from 'sonner';
@@ -25,7 +25,7 @@ export function EditEmployee({ id }: Props) {
   const dispatch = useAppDispatch();
 
   const { employee, error, status } = useAppSelector(state =>
-    selectEmployeeById(state, employeeId),
+    selectEmployeeByIdState(state, employeeId),
   );
   const form = useForm<FormEmployee>({ values: employee });
 

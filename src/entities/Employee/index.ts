@@ -35,6 +35,6 @@ export { getEmployeeByIdThunk } from './model/thunks/getEmpoyeeByIdThunk/getEmpo
 
 //selectors
 export { selectFilteredAndSortedEmployees } from './model/selectors/selectFilteredAndSortedEmployees/selectFilteredAndSortedEmployees';
-export { selectEmployeeById } from './model/selectors/selectEmployeeById/selectEmployeeById';
+export { selectEmployeeByIdState } from './model/selectors/selectEmployeeByIdState/selectEmployeeByIdState';
 export { selectSortBy } from './model/selectors/selectSortBy/selectSortBy';
 export { selectSortDirection } from './model/selectors/selectSortDirection/selectSortDirection';
